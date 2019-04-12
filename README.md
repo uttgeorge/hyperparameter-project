@@ -1,4 +1,4 @@
-Requirement\
+Requirement
 
 Done:
 1. Abstract
