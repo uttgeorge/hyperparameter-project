@@ -2,7 +2,7 @@ import json
 import pandas as pd
 from collections import defaultdict
 
-with open("price_hyperparameters.json") as file:
+with open("jsonfile") as file:
     data = json.load(file)
     
 df = defaultdict(list)
