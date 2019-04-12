@@ -21,7 +21,7 @@
 16. License
 
 ## Abstract
-The project is a part of skunksworks hyperparameters project. First part is to create a database that stores the gilled mushrooms in the Agaricus and Lepiota Family, and second part is to store evalutions and hyperparameters that used to perform algorithmson on mushroom data from in part one.
+The project is a part of skunksworks hyperparameters project. First part is to create a database that stores the gilled mushrooms in the Agaricus and Lepiota Family, and second part is to store evalutions and hyperparameters that used to perform algorithms on mushroom data in part one.
 
 ## Explain Data Source
 This dataset is from UCI Machine Learning Repository, including descriptions of hypothetical samples corresponding to 23 species of gilled mushrooms 
