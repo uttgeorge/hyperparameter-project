@@ -1,4 +1,4 @@
-## Hyperparameter Project
+## Hyperparameter Project on Mushroom Dataset
 
 ## Done:
 1. Abstract
