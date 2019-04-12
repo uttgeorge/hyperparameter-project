@@ -1,10 +1,10 @@
 Requirement
-Done:\
+Done:
 1. Abstract
 2. Explain about Data Source
 3. Create a conceptual schema
 
-Left:\
+Left:
 4. ER diagrams
 5. Normalization(till 3NF)
 6. Physical model
