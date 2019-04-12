@@ -30,3 +30,6 @@ Mushrooms (1981). Each species is identified as definitely edible, definitely po
 edibility and not recommended. This latter class was combined with the poisonous one. The Guide clearly states 
 that there is no simple rule for determining the edibility of a mushroom; no rule like "leaflets three, 
 let it be'' for Poisonous Oak and Ivy.
+
+## Conceptual Schema
+in subfolder
