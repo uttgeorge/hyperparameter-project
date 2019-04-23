@@ -29,9 +29,9 @@ This dataset is from UCI Machine Learning Repository, including descriptions of 
 ## Conceptual Schema
 The conceptual schema [ERD](https://github.com/uttgeorge/hyperparameter-project/blob/master/SQL/Conceptual_Model/ERD.pdf) is in SQL folder.\
 This schema have five major parts:\
-**1.** data_repository: It stores dataset ids and names;
-**2.** predictors: It stores all predictors for each dataset;
-**3.** metadata: It stores data like run_id, run_time and others that models are based on;
-**4.** models: For each run_id, there are several different models, each model has an unique performance.
-**5.** Hyper Parameters: In this database, we store hyper parameter not in a single table, but in several different tables separated by their algorithms.
+**1.** data_repository: It stores dataset ids and names;\
+**2.** predictors: It stores all predictors for each dataset;\
+**3.** metadata: It stores data like run_id, run_time and others that models are based on;\
+**4.** models: For each run_id, there are several different models, each model has an unique performance;\
+**5.** Hyper Parameters: In this database, we store hyper parameter not in a single table, but in several different tables separated by their algorithms.\
 
