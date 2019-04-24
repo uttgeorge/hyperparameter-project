@@ -251,3 +251,110 @@ Results:
 | GBM_2_AutoML_20190420_052704              | 4.65e-16 | 2.16e-31 |     800 |
 
 10 rows in set (0.00 sec)
+
+***Case 2***
+When choosing a algorithm, find the best model(s) and its(their) hyper parameters(Both default and actual). 
+**Step 1.** Create temporary table to store hyper parameters of the best models for each category.
+```mysql
+CREATE TEMPORARY TABLE Best_DeepLearning AS
+SELECT models.model_category,models.rmse,DeepLearning_model.*
+FROM models JOIN DeepLearning_model
+ON models.model_id = DeepLearning_model.DeepLearning_model_id
+WHERE concat(model_category,rmse) IN (
+               SELECT concat(model_category,min(rmse))
+                 FROM models 
+                GROUP BY model_category
+             );
+```
+```mysql
+CREATE TEMPORARY TABLE Best_DRF AS            
+SELECT models.model_category,models.rmse,DRF_model.*
+FROM models JOIN DRF_model
+ON models.model_id = DRF_model.DRF_model_id
+WHERE concat(model_category,rmse) IN (
+               SELECT concat(model_category,min(rmse))
+                 FROM models 
+                GROUP BY model_category
+             );
+```
+```mysql
+CREATE TEMPORARY TABLE Best_GBM AS            
+SELECT models.model_category,models.rmse,GBM_model.*
+FROM models JOIN GBM_model
+ON models.model_id = GBM_model.GBM_model_id
+WHERE concat(model_category,rmse) IN (
+               SELECT concat(model_category,min(rmse))
+                 FROM models 
+                GROUP BY model_category
+             );
+```
+```mysql             
+CREATE TEMPORARY TABLE Best_StackedEnsemble_AllModels AS            
+SELECT models.model_category,models.rmse,StackedEnsemble_AllModels_model.*
+FROM models JOIN StackedEnsemble_AllModels_model
+ON models.model_id = StackedEnsemble_AllModels_model.StackedEnsemble_AllModels_model_id
+WHERE concat(model_category,rmse) IN (
+               SELECT concat(model_category,min(rmse))
+                 FROM models 
+                GROUP BY model_category
+             );
+```
+```mysql
+CREATE TEMPORARY TABLE Best_StackedEnsemble_BestOfFamily AS            
+SELECT models.model_category,models.rmse,StackedEnsemble_BestOfFamily_model.*
+FROM models JOIN StackedEnsemble_BestOfFamily_model
+ON models.model_id = StackedEnsemble_BestOfFamily_model.StackedEnsemble_BestOfFamily_model_id
+WHERE concat(model_category,rmse) IN (
+               SELECT concat(model_category,min(rmse))
+                 FROM models 
+                GROUP BY model_category
+             );
+```
+```mysql
+CREATE TEMPORARY TABLE Best_XRT AS            
+SELECT models.model_category,models.rmse,XRT_model.*
+FROM models JOIN XRT_model
+ON models.model_id = XRT_model.XRT_model_id
+WHERE concat(model_category,rmse) IN (
+               SELECT concat(model_category,min(rmse))
+                 FROM models 
+                GROUP BY model_category
+             );
+```
+**Step 2** Create procedure to return hyper parameters of category we have chosen.
+```mysql
+SET GLOBAL log_bin_trust_function_creators = 1;
+
+DROP PROCEDURE get_hyp;
+DELIMITER //
+CREATE PROCEDURE get_hyp(TableName Varchar(50))
+#RETURNS TEXT
+BEGIN 
+	#SET @t_name = get_name(TableName);
+    #set @val = idnumber;
+    set @sql_text = concat('Select * from Best_', TableName);
+    prepare statement from @sql_text;
+    execute statement;
+    deallocate prepare statement;
+    
+    #WHERE table_name = concat("Best_",model_category);
+	#RETURN tablename;
+END;
+//
+DELIMITER ;
+```
+**Step 3** Execute procedure
+```mysql
+CALL get_hyp('XRT');
+```
+Results:
+
+
+| model_category | rmse        | XRT_model_id                 | actual_or_default | min_split_improvement | fold_column | col_sample_rate_per_tree | fold_assignment | score_tree_interval | sample_rate_per_class | seed                 | keep_cross_validation_predictions | binomial_double_trees | nfolds | keep_cross_validation_models | offset_column | categorical_encoding | checkpoint | stopping_tolerance | training_frame                                                         | max_runtime_secs | calibrate_model | export_checkpoints_dir | balance_classes | r2_stopping            | validation_frame | max_depth | custom_metric_func | response_column | build_tree_one_node | ntrees | ignored_columns | min_rows | mtries | max_confusion_matrix_size | score_each_iteration | nbins_top_level | max_after_balance_size | nbins | histogram_type | stopping_metric | weights_column | stopping_rounds | col_sample_rate_change_per_level | max_hit_ratio_k | nbins_cats | sample_rate | calibration_frame | distribution | class_sampling_factors | check_constant_response | ignore_const_cols | keep_cross_validation_fold_assignment |
+|----------------|-------------|------------------------------|-------------------|-----------------------|-------------|--------------------------|-----------------|---------------------|-----------------------|----------------------|-----------------------------------|-----------------------|--------|------------------------------|---------------|----------------------|------------|--------------------|------------------------------------------------------------------------|------------------|-----------------|------------------------|-----------------|------------------------|------------------|-----------|--------------------|-----------------|---------------------|--------|-----------------|----------|--------|---------------------------|----------------------|-----------------|------------------------|-------|----------------|-----------------|----------------|-----------------|----------------------------------|-----------------|------------|-------------|-------------------|--------------|------------------------|-------------------------|-------------------|---------------------------------------|
+| XRT            | 0.171061011 | XRT_1_AutoML_20190420_034740 | actual            |               0.00001 |             |                        1 | Modulo          |                   0 |                       | -2181650000000000000 | TRUE                              | FALSE                 |      5 | FALSE                        |               | AUTO                 |            |        0.011094687 | automl_training_Key_Frame__upload_8690c96acf38431d14ed72e27dea4966.hex |                0 | FALSE           |                        | FALSE           | 1.7976931348623157e308 |                  |        20 |                    | class           | FALSE               |      9 | []              |        1 |     -1 |                        20 | FALSE                |            1024 |                      5 |    20 | Random         | logloss         |                |               0 |                                1 |               0 |       1024 | 0.632000029 |                   | multinomial  |                        | TRUE                    | TRUE              | FALSE                                 |
+| XRT            | 0.171061011 | XRT_1_AutoML_20190420_034740 | default           |               0.00001 |             |                        1 | AUTO            |                   0 |                       |                   -1 | FALSE                             | FALSE                 |      0 | TRUE                         |               | AUTO                 |            |              0.001 |                                                                        |                0 | FALSE           |                        | FALSE           | 1.7976931348623157e308 |                  |        20 |                    |                 | FALSE               |     50 |                 |        1 |     -1 |                        20 | FALSE                |            1024 |                      5 |    20 | AUTO           | AUTO            |                |               0 |                                1 |               0 |       1024 | 0.632000029 |                   | AUTO         |                        | TRUE                    | TRUE              | FALSE                                 |
+
+2 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
