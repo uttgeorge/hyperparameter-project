@@ -229,12 +229,18 @@ Return its model name and auc, and runtime respectively.
 ```mysql
 DROP VIEW best_model;
 CREATE VIEW best_model AS
-SELECT models.model_id, models.rmse, models.mse,metadata.run_time as runtime
-FROM models 
-JOIN metadata
-ON models.run_id = metadata.run_id
-ORDER BY rmse,mse
-LIMIT 10;
+    SELECT 
+        models.model_category,
+        models.model_id,
+        models.rmse,
+        models.mse,
+        metadata.run_time AS runtime
+    FROM
+        models
+            JOIN
+        metadata ON models.run_id = metadata.run_id
+    ORDER BY rmse , mse
+    LIMIT 10;
 SELECT * FROM best_model;
 ```
 Results:
@@ -376,16 +382,24 @@ CREATE PROCEDURE best_time(dataset Varchar(50))
 #RETURNS TEXT
 BEGIN 
 	set @dataind = 0;
-    	select dataset_id from data_repository where dataset_name =  dataset INTO @dataind;
-	SELECT t.run_time,AVG(t.rmse), min(t.rmse), max(t.auc)
-	FROM
-	(SELECT models.*,metadata.run_time,metadata.dataset_id
-	FROM models
-	JOIN metadata 
-	ON models.run_id = metadata.run_id) t
-   	WHERE t.dataset_id = @dataind
-	GROUP BY t.run_time
-	ORDER BY t.run_time;
+SELECT 
+    dataset_id
+FROM
+    data_repository
+WHERE
+    dataset_name = dataset INTO @dataind;
+	SELECT 
+    t.run_time, AVG(t.rmse), MIN(t.rmse), MAX(t.auc)
+FROM
+    (SELECT 
+        models.*, metadata.run_time, metadata.dataset_id
+    FROM
+        models
+    JOIN metadata ON models.run_id = metadata.run_id) t
+WHERE
+    t.dataset_id = @dataind
+GROUP BY t.run_time
+ORDER BY t.run_time;
 END;
 //
 DELIMITER ;
