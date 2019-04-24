@@ -1,19 +1,5 @@
 # Hyperparameter Project on Mushroom Dataset
 
-
-
-## Left:
-7. 10 use cases per person
-8. 5 views per person
-9. 5 procedures per person
-10. 5 functions per person
-11. 5 indexes per person
-12. Analytics
-13. Conclusion
-14. Professionalism and Report
-15. Citations and References
-16. License
-
 ## 1. Abstract
 The project is a part of skunksworks hyperparameters project. First part is to create a database that stores the gilled mushrooms in the Agaricus and Lepiota Family, and second part is to store evalutions and hyperparameters that used to perform algorithms on mushroom data in part one.
 
