@@ -220,9 +220,9 @@ VALUES
 ('GLM_grid_1_AutoML_20190420_034740_model_1','actual',0.0001,'','binomial','MeanImputation',1,1.71321e18,'TRUE',5,'FALSE','','automl_training_Key_Frame__upload_8690c96acf38431d14ed72e27dea4966.hex',-1,'FALSE',0,'','FALSE',0.0000000001,'','','TRUE','','class','TRUE','','[]','FALSE','TRUE','logit',0.000001,'[0.0, 0.2, 0.4, 0.6, 0.8, 1.0]',20,'FALSE','TRUE',5000,'FALSE','COORDINATE_DESCENT',0.0001,30,'Modulo',0,'','TRUE',5,0,'',0.000123092,0.000001,300,'','FALSE','[19.455893037534402, 12.082439195938939, 7.503399440052737, 4.659738174052406, 2.893776350865394, 1.7970841399325495, 1.116019696902739, 0.6930671392612864, 0.43040643534957707, 0.26728968825124244, 0.16599142479693543, 0.10308348700761596, 0.06401659186098818, 0.03975538810783111, 0.024688769546437426, 0.015332144162794084, 0.009521521280618938, 0.005913026027845397, 0.003672089341137756, 0.002280429692985968, 0.0014161854741368584, 0.0008794751722997229, 0.0005461689819711281, 0.0003391801909397374, 0.00021063664492759166, 0.00013080892508323167, 8.12345586273109e-05, 5.0448037174643384e-05, 3.1329085770628844e-05, 1.945589303753436e-05]'),
 ...;
 ```
-#### 7. use cases
+## 7. use cases
 
-***Case 1***
+### ***Case 1***
 
 Find the best model' name and aucuracy by their measurement: rmse,mse. 
 Return its model name and auc, and runtime respectively.
@@ -260,7 +260,7 @@ Results:
 
 10 rows in set (0.00 sec)
 
-***Case 2***
+### ***Case 2***
 
 When choosing a algorithm, find the best model(s) and its(their) hyper parameters(Both default and actual). 
 
@@ -369,9 +369,9 @@ Results:
 
 Query OK, 0 rows affected (0.00 sec)
 
-***Case 3***
+### ***Case 3***
 
-***Case 4***
+### ***Case 4***
 
 Sometimes, we have to minimize the run time by sacraficing accuracy, so it is important to find a best run time that both minimize the error and have relatively short run time. 
 This case return the average and best performance of each runtime for a chosen dataset.
@@ -421,7 +421,7 @@ Results:
 
 Query OK, 0 rows affected (0.00 sec)
 
-***case 5***
+### ***case 5***
 In this case, we will find the change of performance for each algorithm. If the change is not tramatic, we can choose the short runtime, if the change is big, we have to check which time is better. So this case will also show the deviation of a algorithm by its runtime.
 
 This is the procedure to know change of performance for each algorithm of all time.
