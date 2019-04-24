@@ -61,6 +61,9 @@ Mentioned in 3. Conceptual Schema.
 ## 6. Physical model
 
 ### *6.1 Create Tables*
+
+[Create Tables](https://github.com/uttgeorge/hyperparameter-project/blob/master/SQL/Physical_database/hyperparameter.sql) SQL file is in SQL folder.
+
 ##### Create Database
 Database called hyperparameter
 ```mysql
@@ -142,7 +145,7 @@ CREATE TABLE IF NOT EXISTS GBM_model (
 );
 ```
 ### *6.2 Import Data*
-
+[Import Data](https://github.com/uttgeorge/hyperparameter-project/blob/master/SQL/Physical_database/importdata.sql) SQL file is in SQL folder.
 1. data_repository 
 ```mysql
 INSERT INTO data_repository(dataset_name)
@@ -205,7 +208,9 @@ VALUES
 ('GLM_grid_1_AutoML_20190420_034740_model_1','actual',0.0001,'','binomial','MeanImputation',1,1.71321e18,'TRUE',5,'FALSE','','automl_training_Key_Frame__upload_8690c96acf38431d14ed72e27dea4966.hex',-1,'FALSE',0,'','FALSE',0.0000000001,'','','TRUE','','class','TRUE','','[]','FALSE','TRUE','logit',0.000001,'[0.0, 0.2, 0.4, 0.6, 0.8, 1.0]',20,'FALSE','TRUE',5000,'FALSE','COORDINATE_DESCENT',0.0001,30,'Modulo',0,'','TRUE',5,0,'',0.000123092,0.000001,300,'','FALSE','[19.455893037534402, 12.082439195938939, 7.503399440052737, 4.659738174052406, 2.893776350865394, 1.7970841399325495, 1.116019696902739, 0.6930671392612864, 0.43040643534957707, 0.26728968825124244, 0.16599142479693543, 0.10308348700761596, 0.06401659186098818, 0.03975538810783111, 0.024688769546437426, 0.015332144162794084, 0.009521521280618938, 0.005913026027845397, 0.003672089341137756, 0.002280429692985968, 0.0014161854741368584, 0.0008794751722997229, 0.0005461689819711281, 0.0003391801909397374, 0.00021063664492759166, 0.00013080892508323167, 8.12345586273109e-05, 5.0448037174643384e-05, 3.1329085770628844e-05, 1.945589303753436e-05]'),
 ...;
 ```
-## 7. use cases
+## 7. Use Cases
+
+[Qi Jin's Use Cases](https://github.com/uttgeorge/hyperparameter-project/blob/master/SQL/Physical_database/QI%20JIN%20USECASE.sql) SQL file is in SQL folder.
 
 ### ***Case 1***
 
