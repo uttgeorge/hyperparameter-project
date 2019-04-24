@@ -3,7 +3,6 @@
 
 
 ## Left:
-6. Physical model
 7. 10 use cases per person
 8. 5 views per person
 9. 5 procedures per person
@@ -221,3 +220,32 @@ VALUES
 ('GLM_grid_1_AutoML_20190420_034740_model_1','actual',0.0001,'','binomial','MeanImputation',1,1.71321e18,'TRUE',5,'FALSE','','automl_training_Key_Frame__upload_8690c96acf38431d14ed72e27dea4966.hex',-1,'FALSE',0,'','FALSE',0.0000000001,'','','TRUE','','class','TRUE','','[]','FALSE','TRUE','logit',0.000001,'[0.0, 0.2, 0.4, 0.6, 0.8, 1.0]',20,'FALSE','TRUE',5000,'FALSE','COORDINATE_DESCENT',0.0001,30,'Modulo',0,'','TRUE',5,0,'',0.000123092,0.000001,300,'','FALSE','[19.455893037534402, 12.082439195938939, 7.503399440052737, 4.659738174052406, 2.893776350865394, 1.7970841399325495, 1.116019696902739, 0.6930671392612864, 0.43040643534957707, 0.26728968825124244, 0.16599142479693543, 0.10308348700761596, 0.06401659186098818, 0.03975538810783111, 0.024688769546437426, 0.015332144162794084, 0.009521521280618938, 0.005913026027845397, 0.003672089341137756, 0.002280429692985968, 0.0014161854741368584, 0.0008794751722997229, 0.0005461689819711281, 0.0003391801909397374, 0.00021063664492759166, 0.00013080892508323167, 8.12345586273109e-05, 5.0448037174643384e-05, 3.1329085770628844e-05, 1.945589303753436e-05]'),
 ...;
 ```
+#### 7. use cases
+***Case 1***
+Find the best model' name and aucuracy by their measurement: rmse,mse. 
+Return its model name and auc, and runtime respectively.
+```mysql
+DROP VIEW best_model;
+CREATE VIEW best_model AS
+SELECT models.model_id, models.rmse, models.mse,metadata.run_time as runtime
+FROM models 
+JOIN metadata
+ON models.run_id = metadata.run_id
+ORDER BY rmse,mse
+LIMIT 10;
+SELECT * FROM best_model;
+```
+Results:
+| model_id                                  | rmse     | mse      | runtime |
+|-------------------------------------------|----------|----------|---------|
+| GBM_grid_1_AutoML_20190420_034740_model_3 | 5.02e-17 | 2.52e-33 |     400 |
+| GBM_grid_1_AutoML_20190420_041549_model_4 | 5.79e-17 | 3.35e-33 |     600 |
+| GBM_grid_1_AutoML_20190420_041549_model_3 | 7.13e-17 | 5.08e-33 |     600 |
+| GBM_grid_1_AutoML_20190420_052704_model_1 | 8.23e-17 | 6.78e-33 |     800 |
+| GBM_grid_1_AutoML_20190420_034740_model_2 | 9.95e-17 |  9.9e-33 |     400 |
+| GBM_grid_1_AutoML_20190419_130933_model_3 | 1.12e-16 | 1.25e-32 |     200 |
+| GBM_2_AutoML_20190420_055921              |  2.1e-16 |  4.4e-32 |    1000 |
+| GBM_grid_1_AutoML_20190420_041549_model_5 | 4.17e-16 | 1.74e-31 |     600 |
+| GBM_1_AutoML_20190420_055921              | 4.59e-16 | 2.11e-31 |    1000 |
+| GBM_2_AutoML_20190420_052704              | 4.65e-16 | 2.16e-31 |     800 |
+10 rows in set (0.00 sec)
