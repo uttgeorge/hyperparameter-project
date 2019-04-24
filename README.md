@@ -7,7 +7,7 @@ The project is a part of skunksworks hyperparameters project. First part is to c
 This dataset is from UCI Machine Learning Repository, including descriptions of hypothetical samples corresponding to 23 species of gilled mushrooms in the Agaricus and Lepiota Family Mushroom drawn from The Audubon Society Field Guide to North American Mushrooms (1981). Each species is identified as definitely edible, definitely poisonous, or of unknown edibility and not recommended. This latter class was combined with the poisonous one. The Guide clearly states that there is no simple rule for determining the edibility of a mushroom; no rule like "leaflets three, let it be'' for Poisonous Oak and Ivy.
 
 ## 3. Conceptual Schema
-The conceptual schema [ERD](https://github.com/uttgeorge/hyperparameter-project/blob/master/SQL/Conceptual_Model/ERD.pdf) is in SQL folder.\
+The conceptual schema [ERD](https://github.com/uttgeorge/hyperparameter-project/blob/master/SQL/Physical_database/ERD.pdf) is in SQL folder.\
 This schema have five major parts:\
 **1.** data_repository: It stores dataset ids and names;\
 **2.** predictors: It stores all predictors for each dataset;\
