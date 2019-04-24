@@ -362,6 +362,7 @@ Query OK, 0 rows affected (0.00 sec)
 ***Case 3***
 
 ***Case 4***
+
 Sometimes, we have to minimize the run time by sacraficing error, so it is important to find a best run time that both minimize the error and have resonable run time. 
 Find the average and best performance of each runtime for a chosen dataset.
 ```mysql
