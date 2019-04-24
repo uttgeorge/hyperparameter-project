@@ -371,6 +371,70 @@ Query OK, 0 rows affected (0.00 sec)
 
 ### ***Case 3***
 
+When input the dataset name, return the predictors that we use.
+
+```mysql
+DROP PROCEDURE find_predictors;
+DELIMITER //
+CREATE PROCEDURE find_predictors(dataset Varchar(50))
+BEGIN 
+	set @dataind = 0;
+SELECT 
+    dataset_id
+FROM
+    data_repository
+WHERE
+    dataset_name = dataset INTO @dataind;
+SELECT 
+    t.predictor_name AS 'predictor names'
+FROM
+    (SELECT 
+        data_repository.dataset_name,
+            predictors.predictor_name,
+            predictors.dataset_id
+    FROM
+        data_repository
+    JOIN predictors ON data_repository.dataset_id = predictors.dataset_id) t
+WHERE
+    t.dataset_id = @dataind;
+END;
+//
+DELIMITER ;
+```
+```mysql
+CALL find_predictors('mushroom');
+```
+
+| predictor names          |
+|--------------------------|
+| bruises                  |
+| cap-color                |
+| cap-shape                |
+| cap-surface              |
+| gill-attachment          |
+| gill-color               |
+| gill-size                |
+| gill-spacing             |
+| habitat                  |
+| odor                     |
+| population               |
+| ring-number              |
+| ring-type                |
+| spore-prstring-color     |
+| stalk-color-above-ring   |
+| stalk-color-below-ring   |
+| stalk-root               |
+| stalk-shape              |
+| stalk-surface-above-ring |
+| stalk-surface-below-ring |
+| veil-color               |
+| veil-type                |
+|--------------------------|
+22 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+
 ### ***Case 4***
 
 Sometimes, we have to minimize the run time by sacraficing accuracy, so it is important to find a best run time that both minimize the error and have relatively short run time. 
