@@ -221,7 +221,9 @@ VALUES
 ...;
 ```
 #### 7. use cases
+
 ***Case 1***
+
 Find the best model' name and aucuracy by their measurement: rmse,mse. 
 Return its model name and auc, and runtime respectively.
 ```mysql
@@ -253,7 +255,9 @@ Results:
 10 rows in set (0.00 sec)
 
 ***Case 2***
+
 When choosing a algorithm, find the best model(s) and its(their) hyper parameters(Both default and actual). 
+
 **Step 1.** Create temporary table to store hyper parameters of the best models for each category.
 ```mysql
 CREATE TEMPORARY TABLE Best_DeepLearning AS
