@@ -235,7 +235,7 @@ ORDER BY rmse,mse
 LIMIT 10;
 SELECT * FROM best_model;
 ```
-Results:\
+Results:
 
 | model_id                                  | rmse     | mse      | runtime |
 |-------------------------------------------|----------|----------|---------|
@@ -249,4 +249,5 @@ Results:\
 | GBM_grid_1_AutoML_20190420_041549_model_5 | 4.17e-16 | 1.74e-31 |     600 |
 | GBM_1_AutoML_20190420_055921              | 4.59e-16 | 2.11e-31 |    1000 |
 | GBM_2_AutoML_20190420_052704              | 4.65e-16 | 2.16e-31 |     800 |
+
 10 rows in set (0.00 sec)
