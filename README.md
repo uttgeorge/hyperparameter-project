@@ -587,7 +587,8 @@ Query OK, 0 rows affected (0.00 sec)
 
 ## 8. Citations and References
 
-Thanks to Mayuresh Deodhar for his hardwork, he built the model and got all the data we need.
+Thanks to Mayuresh Deodhar for his hardwork, he built the model and got all the data we need.\
+
 Tutorial by Prof.Brown: [Link](https://github.com/nikbearbrown/INFO_6210/blob/master/Assingments/INFO_6210_SP19_Assignment_3.pdf)<br/>
 
 Qi Jin: 50% of this project, including the usecase 1 to 5.
