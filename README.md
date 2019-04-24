@@ -358,3 +358,46 @@ Results:
 2 rows in set (0.00 sec)
 
 Query OK, 0 rows affected (0.00 sec)
+
+***Case 3***
+
+***Case 4***
+Sometimes, we have to minimize the run time by sacraficing error, so it is important to find a best run time that both minimize the error and have resonable run time. 
+Find the average and best performance of each runtime for a chosen dataset.
+```mysql
+DROP PROCEDURE best_time;
+DELIMITER //
+CREATE PROCEDURE best_time(dataset Varchar(50))
+#RETURNS TEXT
+BEGIN 
+	
+	set @dataind = 0;
+    select dataset_id from data_repository where dataset_name =  dataset INTO @dataind;
+	SELECT t.run_time,AVG(t.rmse), min(t.rmse), max(t.auc)
+	FROM
+	(SELECT models.*,metadata.run_time,metadata.dataset_id
+	FROM models
+	JOIN metadata 
+	ON models.run_id = metadata.run_id) t
+    WHERE t.dataset_id = @dataind
+	GROUP BY t.run_time;
+END;
+//
+DELIMITER ;
+```
+```mysql
+CALL best_time('mushroom');
+```
+Results:
+
+| run_time | AVG(t.rmse)         | min(t.rmse) | max(t.auc) |
+|----------|---------------------|-------------|------------|
+|      400 | 0.05775518490004715 |    5.02e-17 |          1 |
+|     1000 | 0.08447084129975319 |     2.1e-16 |          1 |
+|      200 | 0.02419750178998679 |    1.12e-16 |          1 |
+|      600 | 0.08628367447833506 |    5.79e-17 |          1 |
+|      800 | 0.04891000658321349 |    8.23e-17 |          1 |
+
+5 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
