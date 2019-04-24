@@ -598,3 +598,9 @@ Results:
 Query OK, 0 rows affected (0.00 sec)
 
 **As we see, when runtime equal 400, performance of GBM changed a lot, so if we choose GBM as our algorithm, set runtime as 400 is better.**
+
+## 8. Citations and References
+
+Thanks to Mayuresh Deodhar for his hardwork, he built the model and got all the data we need.
+
+## 9. License
