@@ -406,3 +406,115 @@ Results:
 5 rows in set (0.00 sec)
 
 Query OK, 0 rows affected (0.00 sec)
+
+***case 5***
+In this case, we will find the change of performance for each algorithm. If the change is not tramatic, we can choose the short runtime, if the change is big, we have to check which time is better. So this case will also show the deviation of a algorithm by its runtime.\
+
+This is the procedure to know change of performance for each algorithm of all time.
+```mysql
+DROP PROCEDURE change_signiificant;
+DELIMITER //
+CREATE PROCEDURE change_signiificant(dataset Varchar(50))
+BEGIN
+	set @dataind = 0;
+    select dataset_id from data_repository where dataset_name =  dataset INTO @dataind;
+    
+	SELECT t.model_category,/*STD(t.auc) as 'accuracy deviation',*/STD(t.rmse) as 'rmse deviation', max(t.rmse) - min(t.rmse) as 'rmse gap'
+	FROM
+	(SELECT models.*,metadata.run_time,metadata.dataset_id
+		FROM models
+		JOIN metadata 
+		ON models.run_id = metadata.run_id) t
+	WHERE t.dataset_id = @dataind
+	GROUP BY t.model_category
+	ORDER BY STD(t.rmse) DESC;
+END;
+//
+DELIMITER ;
+```
+This is the procedure to know change of performance for a algorithm by its runtime.
+```mysql
+DROP PROCEDURE change_by_time;
+DELIMITER //
+CREATE PROCEDURE change_by_time(dataset Varchar(50),model_category Varchar(50))
+BEGIN
+	set @dataind = 0;
+SELECT 
+    dataset_id
+FROM
+    data_repository
+WHERE
+    dataset_name = dataset INTO @dataind;
+    
+	SELECT 
+    t.run_time,
+    t.model_category,
+    STD(t.auc) AS 'accuracy deviation',
+    STD(t.rmse) AS 'rmse deviation',
+    MAX(t.rmse) - MIN(t.rmse) AS 'rmse gap'
+FROM
+    (SELECT 
+        models.*, metadata.run_time, metadata.dataset_id
+    FROM
+        models
+    JOIN metadata ON models.run_id = metadata.run_id) t
+WHERE
+    t.model_category = (SELECT 
+            t.model_category
+        FROM
+            (SELECT 
+                models.*, metadata.run_time, metadata.dataset_id
+            FROM
+                models
+            JOIN metadata ON models.run_id = metadata.run_id) t
+        WHERE
+            t.model_category = model_category
+        GROUP BY t.model_category
+        ORDER BY STD(t.rmse) DESC
+        )
+GROUP BY t.run_time , t.model_category
+ORDER BY t.run_time;
+END;
+//
+DELIMITER ;
+```
+
+```mysql
+CALL change_signiificant('mushroom');
+```
+
+Results:
+
+| model_category               | rmse deviation         | rmse gap               |
+|------------------------------|------------------------|------------------------|
+| GBM                          |    0.14115963219403407 |    0.49724433099999993 |
+| DeepLearning                 |    0.06186019080986617 |             0.19954826 |
+| XRT                          |    0.05494093456805064 |            0.141191198 |
+| DRF                          |   0.005073231033352161 |   0.014260127999999999 |
+| StackedEnsemble_AllModels    |  0.0002849904602021618 |  0.0007624579999999999 |
+| StackedEnsemble_BestOfFamily | 0.00016089958252897993 | 0.00043716700000000024 |
+| GLM                          |                      0 |                      0 |
+7 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+*GBM changed a lot, GLM did not change at all, let's take a look at GBM.*
+
+```mysql
+CALL change_by_time('mushroom','GBM');
+```
+
+Results:
+
+| run_time | model_category | accuracy deviation        | rmse deviation      | rmse gap             |
+|----------|----------------|---------------------------|---------------------|----------------------|
+|      200 | GBM            | 0.00000020039999999813912 | 0.00835874274435898 | 0.024534885999999888 |
+|      400 | GBM            |      0.023765766348531395 | 0.15540871496304445 |  0.49724433099999993 |
+|      600 | GBM            |     0.0006093275892166271 | 0.16485033246117756 |  0.47631623999999995 |
+|      800 | GBM            |    0.00000486090000002363 | 0.02697416736120888 |  0.08991479299999992 |
+|     1000 | GBM            |   0.000026509276091848646 | 0.19201546889025076 |   0.4748269919999998 |
+5 rows in set (0.00 sec)
+
+Query OK, 0 rows affected (0.00 sec)
+
+*As we see, when runtime equal 400, performance of GBM changed a lot, so if we choose GBM as our algorithm, set runtime as 400 is better.*
