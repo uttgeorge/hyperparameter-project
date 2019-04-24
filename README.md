@@ -74,8 +74,8 @@ A table to store the id and the name of each dataset
 ```mysql
 drop table if exists data_repository;
 create table if not exists data_repository(
-	dataset_id int primary key auto_increment,
-    dataset_name text not null
+     dataset_id int primary key auto_increment,
+     dataset_name text not null
 );
 ```
 ##### Create predictors table
@@ -84,7 +84,7 @@ For each predictor_id, we will have several predictors
 ```mysql
 drop table if exists predictors;
 create table if not exists predictors(
-	dataset_id int not null,
+    dataset_id int not null,
     predictor_name varchar(255) not null,
     constraint predictor_pk primary key (dataset_id,predictor_name),
     constraint predictor_fk foreign key (dataset_id) references data_repository(dataset_id)
@@ -96,7 +96,7 @@ For each dataset,there are several meta data, including run time, run id.
 ```mysql
 drop table if exists metadata;
 create table if not exists metadata(
-	dataset_id int not null,
+    dataset_id int not null,
     run_id varchar(255) primary key,
     min_mem_size int not null,
     scale text not null,
@@ -110,9 +110,9 @@ For each run id, we will generate several models with their performance respecti
 ```mysql
 drop table if exists models;
 create table models(
-	run_id varchar(255) not null,
-	model_id varchar(255) not null,
-	auc double default null,
+    run_id varchar(255) not null,
+    model_id varchar(255) not null,
+    auc double default null,
     logloss double default null,
     mean_per_class_error double default null,
     rmse double default null,
@@ -127,19 +127,18 @@ We seperate hyper parameter table into 7 tables, each table corresponding to a a
 ```mysql
 drop table if exists GBM_model;
 CREATE TABLE IF NOT EXISTS GBM_model (
-  GBM_model_id VARCHAR(255) NOT NULL,
-  # True means actual, False means default
-  actual_or_default varchar(25) default false,
- 
-  `learn_rate` DOUBLE NULL DEFAULT NULL,
-  `fold_column` TEXT NULL DEFAULT NULL,
-  `col_sample_rate_per_tree` DOUBLE NULL DEFAULT NULL,
+   GBM_model_id VARCHAR(255) NOT NULL,
+   # True means actual, False means default
+   actual_or_default varchar(25) default false,
+   `learn_rate` DOUBLE NULL DEFAULT NULL,
+   `fold_column` TEXT NULL DEFAULT NULL,
+   `col_sample_rate_per_tree` DOUBLE NULL DEFAULT NULL,
 ...
-  `ignore_const_cols` TEXT NULL DEFAULT NULL,
-  `keep_cross_validation_fold_assignment` TEXT NULL DEFAULT NULL,
+   `ignore_const_cols` TEXT NULL DEFAULT NULL,
+   `keep_cross_validation_fold_assignment` TEXT NULL DEFAULT NULL,
 
-  PRIMARY KEY (GBM_model_id,actual_or_default),
-  CONSTRAINT GBM_model_fk FOREIGN KEY (GBM_model_id) REFERENCES models (model_id)
+   PRIMARY KEY (GBM_model_id,actual_or_default),
+   CONSTRAINT GBM_model_fk FOREIGN KEY (GBM_model_id) REFERENCES models (model_id)
 );
 ```
 ### *6.2 Import Data*
