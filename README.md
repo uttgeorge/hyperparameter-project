@@ -375,7 +375,6 @@ DELIMITER //
 CREATE PROCEDURE best_time(dataset Varchar(50))
 #RETURNS TEXT
 BEGIN 
-	
 	set @dataind = 0;
     select dataset_id from data_repository where dataset_name =  dataset INTO @dataind;
 	SELECT t.run_time,AVG(t.rmse), min(t.rmse), max(t.auc)
@@ -385,7 +384,8 @@ BEGIN
 	JOIN metadata 
 	ON models.run_id = metadata.run_id) t
     WHERE t.dataset_id = @dataind
-	GROUP BY t.run_time;
+	GROUP BY t.run_time
+	ORDER BY t.run_time;
 END;
 //
 DELIMITER ;
@@ -395,13 +395,13 @@ CALL best_time('mushroom');
 ```
 Results:
 
-| run_time | AVG(t.rmse)         | min(t.rmse) | max(t.auc) |
+| run time | AVG(rmse)         | min(rmse) | max(auc) |
 |----------|---------------------|-------------|------------|
-|      400 | 0.05775518490004715 |    5.02e-17 |          1 |
-|     1000 | 0.08447084129975319 |     2.1e-16 |          1 |
 |      200 | 0.02419750178998679 |    1.12e-16 |          1 |
+|      400 | 0.05775518490004715 |    5.02e-17 |          1 |
 |      600 | 0.08628367447833506 |    5.79e-17 |          1 |
 |      800 | 0.04891000658321349 |    8.23e-17 |          1 |
+|     1000 | 0.08447084129975319 |     2.1e-16 |          1 |
 
 5 rows in set (0.00 sec)
 
