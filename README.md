@@ -408,7 +408,7 @@ Results:
 Query OK, 0 rows affected (0.00 sec)
 
 ***case 5***
-In this case, we will find the change of performance for each algorithm. If the change is not tramatic, we can choose the short runtime, if the change is big, we have to check which time is better. So this case will also show the deviation of a algorithm by its runtime.\
+In this case, we will find the change of performance for each algorithm. If the change is not tramatic, we can choose the short runtime, if the change is big, we have to check which time is better. So this case will also show the deviation of a algorithm by its runtime.
 
 This is the procedure to know change of performance for each algorithm of all time.
 ```mysql
@@ -499,7 +499,7 @@ Results:
 
 Query OK, 0 rows affected (0.00 sec)
 
-*GBM changed a lot, GLM did not change at all, let's take a look at GBM.*
+**GBM changed a lot, GLM did not change at all, let's take a look at GBM.**
 
 ```mysql
 CALL change_by_time('mushroom','GBM');
@@ -519,4 +519,4 @@ Results:
 
 Query OK, 0 rows affected (0.00 sec)
 
-*As we see, when runtime equal 400, performance of GBM changed a lot, so if we choose GBM as our algorithm, set runtime as 400 is better.*
+**As we see, when runtime equal 400, performance of GBM changed a lot, so if we choose GBM as our algorithm, set runtime as 400 is better.**
